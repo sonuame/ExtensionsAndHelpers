@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <AssemblyName>connectjs.dev.extensions</AssemblyName>
+        <RootNamespace>connectjs.dev.extensions</RootNamespace>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageId>ConnectJS.Extensions</PackageId>
+        <Title>Extensions and Helpers</Title>
+        <Authors>Sunil Kumar</Authors>
+        <Description>This library provides various extension functions and helpers for day to day development activities</Description>
+        <Copyright>Copyright 2019, ConnectJS.in</Copyright>
+        <Company>ConnectJS</Company>
+        <Product>Extension and Helpers</Product>
+        <AssemblyVersion>1.0.0</AssemblyVersion>
+        <FileVersion>1.0.0</FileVersion>
+        <PackageProjectUrl>https://github.com/sonuame/ExtensionsAndHelpers.git</PackageProjectUrl>
+        <PackageLicenseUrl>https://github.com/sonuame/ExtensionsAndHelpers/blob/master/LICENSE.md/LICENSE.md</PackageLicenseUrl>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="9.0.0" />
+      <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    </ItemGroup>
+
+</Project>

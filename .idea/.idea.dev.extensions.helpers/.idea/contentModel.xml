@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\Sunil Kumar\.Rider2019.3\config\consoles\db" t="IncludeRecursive" />
+    <e p="C:\Users\Sunil Kumar\.Rider2019.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Sunil Kumar\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_dev.extensions.helpers.-32711780.00" t="ExcludeRecursive" />
+    <e p="D:\GitClones\dev.extensions.helpers" t="IncludeFlat">
+      <e p="dev.extensions.helpers" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="ConnectJS.Extensions.1.0.0.nupkg" t="Include" />
+        <e p="connectjs.extensions.nuspec" t="Include" />
+        <e p="dev.extensions.helpers.csproj" t="IncludeRecursive" />
+        <e p="Extensions.cs" t="Include" />
+        <e p="Helpers.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netstandard2.1" t="Include">
+              <e p="dev.extensions.helpers.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="packageIcon.png" t="Include" />
+      </e>
+      <e p="dev.extensions.helpers.sln" t="IncludeFlat" />
+      <e p="packages" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>
