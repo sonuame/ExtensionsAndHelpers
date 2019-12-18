@@ -1,6 +1,10 @@
 
+using AutoMapper;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -11,24 +15,12 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Xml;
 using System.Xml.Serialization;
-using AutoMapper;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace connectjs.dev.extensions
 {
     public static class Extensions
     {
-        public static string ToDDMMYYYY(this DateTime dt)
-        {
-            return dt.ToString("dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
-        }
-
-        public static string ToMMDDYYYY(this DateTime dt)
-        {
-            return dt.ToString("MM-dd-yyyy", System.Globalization.CultureInfo.InvariantCulture);
-        }
-
+        #region String Extensions
         public static bool IsNullOrEmpty(this String s)
         {
             return String.IsNullOrEmpty(s);
@@ -50,24 +42,9 @@ namespace connectjs.dev.extensions
             return string.Join(separater, data);
         }
 
-        public static string Join(this int[] data, string separater)
+        public static T ParseObject<T>(this JObject value)
         {
-            return string.Join(separater, data);
-        }
-
-        public static string Join(this IEnumerable<string> data, string separater)
-        {
-            return string.Join(separater, data);
-        }
-
-        public static string Join(this IEnumerable<int> data, string separater)
-        {
-            return string.Join(separater, data);
-        }
-
-        public static byte[] GetBytes(this string data)
-        {
-            return Encoding.UTF8.GetBytes(data);
+            return value.ToObject<T>(new JsonSerializer { DateParseHandling = DateParseHandling.None });
         }
 
         public static byte[] GetBytes(this object obj)
@@ -82,6 +59,11 @@ namespace connectjs.dev.extensions
             }
         }
 
+        public static byte[] GetBytes(this string data)
+        {
+            return Encoding.UTF8.GetBytes(data);
+        }
+
         public static byte[] GetBytesFromBase64(this string data)
         {
             return Convert.FromBase64String(data);
@@ -90,11 +72,6 @@ namespace connectjs.dev.extensions
         public static string GetBase64(this string data)
         {
             return System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(data));
-        }
-
-        public static string GetString(this byte[] data)
-        {
-            return Convert.ToBase64String(data);
         }
 
         public static DateTime ToDateTime(this string dt, string format = null)
@@ -123,13 +100,6 @@ namespace connectjs.dev.extensions
         {
             return (long)ToDateTime(dt, format).Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
         }
-
-        public static long ToEpoch(this DateTime dt)
-        {
-            return (long)dt.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
-        }
-
-
 
         public static string Compress(this string uncompressedString)
         {
@@ -169,46 +139,9 @@ namespace connectjs.dev.extensions
             return Encoding.UTF8.GetString(decompressedBytes);
         }
 
-        public static JObject ToJson(this Dictionary<string, string> data)
-        {
-            return JObject.Parse(Serialize(data));
-        }
-
-        public static JObject ToJson<T>(this Dictionary<string, T> data)
-        {
-            return JObject.Parse(Serialize(data));
-        }
-
-
         public static T ToObject<T>(this string value)
         {
             return JsonConvert.DeserializeObject<T>(value, new JsonSerializerSettings { DateParseHandling = DateParseHandling.None });
-        }
-
-        public static T ParseObject<T>(this JObject value)
-        {
-            return value.ToObject<T>(new JsonSerializer { DateParseHandling = DateParseHandling.None });
-        }
-
-        public static object GetPropertyValue<T>(this T input, string property)
-        {
-            var prop = input.GetType().GetProperties().FirstOrDefault(m => m.Name == property);
-            if (prop != null)
-                return prop.GetValue(input);
-            return null;
-        }
-
-        public static object GetPropertyValue<T>(this object input, string property)
-        {
-            var prop = input.GetType().GetProperties().FirstOrDefault(m => m.Name == property);
-            if (prop != null)
-                return prop.GetValue(input);
-            return null;
-        }
-
-        public static DateTime ToIndianTime(this System.DateTime dateTime)
-        {
-            return dateTime.ToUniversalTime().AddHours(5).AddMinutes(30);
         }
 
         public static string AddVariableValue(this string input, string variable, string value)
@@ -255,6 +188,20 @@ namespace connectjs.dev.extensions
             return ToJson(items).ToObject<T>();
         }
 
+        public static int ToInt(this string value)
+        {
+            if (int.TryParse(value, out var output)) return output;
+            throw new Exception("String invalid for conversion");
+        }
+
+        public static double ToDouble(this string value)
+        {
+            if (double.TryParse(value, out var output)) return output;
+            throw new Exception("String invalid for conversion");
+        }
+        #endregion
+
+        #region PropertyInfo
         public static bool IsBool(this PropertyInfo prop)
         {
             return prop.PropertyType.Equals(typeof(bool)) || prop.PropertyType.Equals(typeof(bool?));
@@ -279,7 +226,9 @@ namespace connectjs.dev.extensions
         {
             return prop.PropertyType.Equals(typeof(double)) || prop.PropertyType.Equals(typeof(double?));
         }
+        #endregion
 
+        #region Mapping
         public static TDestination Map<TSource, TDestination>(this TSource source, bool excludeNulls = true)
         {
             var config = new MapperConfiguration(cfg =>
@@ -305,6 +254,19 @@ namespace connectjs.dev.extensions
                 });
             }
             return obj;
+        }
+        #endregion
+
+        #region Collections
+
+        public static JObject ToJson(this Dictionary<string, string> data)
+        {
+            return JObject.Parse(Serialize(data));
+        }
+
+        public static JObject ToJson<T>(this Dictionary<string, T> data)
+        {
+            return JObject.Parse(Serialize(data));
         }
 
         public static void ForEachItem<T>(this List<T> source, Action<T, int> predicate)
@@ -338,16 +300,141 @@ namespace connectjs.dev.extensions
             return @this.ToList().AddItem(item).ToArray();
         }
 
-        public static int ToInt(this string value)
+        public static string Join(this int[] data, string separater)
         {
-            if (int.TryParse(value, out var output)) return output;
-            throw new Exception("String invalid for conversion");
+            return string.Join(separater, data);
         }
 
-        public static double ToDouble(this string value)
+        public static string Join(this IEnumerable<string> data, string separater)
         {
-            if (double.TryParse(value, out var output)) return output;
-            throw new Exception("String invalid for conversion");
+            return string.Join(separater, data);
         }
+
+        public static string Join(this IEnumerable<int> data, string separater)
+        {
+            return string.Join(separater, data);
+        }
+        #endregion
+
+        #region DateTime
+        public static string ToDDMMYYYY(this DateTime dt)
+        {
+            return dt.ToString("dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
+        }
+
+        public static string ToMMDDYYYY(this DateTime dt)
+        {
+            return dt.ToString("MM-dd-yyyy", System.Globalization.CultureInfo.InvariantCulture);
+        }
+
+        public static long ToEpoch(this DateTime dt)
+        {
+            return (long)dt.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+        }
+
+        public static DateTime ToIndianTime(this System.DateTime dateTime)
+        {
+            return dateTime.ToUniversalTime().AddHours(5).AddMinutes(30);
+        }
+        #endregion
+
+        #region Others
+        public static string GetString(this byte[] data)
+        {
+            return Convert.ToBase64String(data);
+        }
+
+        public static string ToConditionalString(this bool value, string valueIfTrue, string valueIfFalse)
+        {
+            return value ? valueIfTrue : valueIfFalse;
+        }
+
+        public static string GetAppKeyValue(string appKey, string _default = null)
+        {
+            return ConfigurationManager.AppSettings[appKey] ?? _default;
+        }
+
+        public static string GetConnectionString(string name)
+        {
+            return ConfigurationManager.ConnectionStrings[name]?.ConnectionString;
+        }
+
+        public static string GetCurrentMethodFullName<T>(this MethodBase method)
+        {
+            return $"{typeof(T).FullName}.{method.Name}";
+        }
+
+        public static string GetCurrentMethodFullName(this MethodBase method, Type type)
+        {
+            return $"{type.FullName}.{method.Name}";
+        }
+
+        public static string GetAssemblyOutputPath<T>(this T type)
+        {
+            var assemblyLocation = Assembly.GetAssembly(typeof(T)).Location;
+            var fileName = Path.GetFileName(assemblyLocation);
+            return assemblyLocation.Replace(fileName, string.Empty);
+        }
+        #endregion
+
+        #region Object Extensions
+
+        public static object GetPropertyValue<T>(this T input, string property)
+        {
+            var prop = input.GetType().GetProperties().FirstOrDefault(m => m.Name == property);
+            if (prop != null)
+                return prop.GetValue(input);
+            return null;
+        }
+
+        public static object GetPropertyValue<T>(this object input, string property)
+        {
+            var prop = input.GetType().GetProperties().FirstOrDefault(m => m.Name == property);
+            if (prop != null)
+                return prop.GetValue(input);
+            return null;
+        }
+
+        /// <summary>
+        /// Gets member value using the reflection
+        /// </summary>
+        public static object GetMemberValue<T>(this T obj, string memberName)
+        {
+            var member = typeof(T).GetMember(memberName)
+                .FirstOrDefault();
+
+            if (member == null)
+                return null;
+
+            return member.GetMemberValue(obj);
+        }
+
+        private static object GetMemberValue<T>(this MemberInfo memberInfo, T obj)
+        {
+            object value;
+            if (memberInfo is FieldInfo)
+                value = ((FieldInfo)memberInfo).GetValue(obj);
+            else
+                value = ((PropertyInfo)memberInfo).GetValue(obj, null);
+            return value;
+        }
+
+        /// <summary>
+        /// Returns a string representing the current object without the worry of checking the object against null.
+        /// </summary>
+        public static string ToNullSafeString(this object obj)
+        {
+            var result = string.Empty;
+            if (obj != null)
+                result = obj.ToString();
+            return result;
+        }
+
+        public static List<string> GetPublicStaticFields(this object obj)
+        {
+            var fields = obj.GetType().GetFields(BindingFlags.Public | BindingFlags.Static);
+            return fields.Select(f => f.GetValue(obj).ToString()).ToList();
+        }
+        #endregion
     }
 }

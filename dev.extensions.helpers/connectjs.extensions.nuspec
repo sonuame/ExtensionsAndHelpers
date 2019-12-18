@@ -2,7 +2,7 @@
 <package>
     <metadata>
         <id>ConnectJS.Extensions</id>
-        <version>1.0.0</version>
+        <version>1.2</version>
         <title>Extensions and Helpers</title>
         <authors>Connectjs.in</authors>
         <owners>Sunil Kumar</owners>
@@ -21,6 +21,7 @@
         <dependencies>
             <dependency id="AutoMapper" version="9.0.0"/>
             <dependency id="Newtonsoft.Json" version="12.0.3"/>
+            <dependency id="System.Configuration.ConfigurationManager" version="4.7.0"/>
         </dependencies>
         <summary>This library provides various extension functions and helpers for day to day development
             activities</summary>
