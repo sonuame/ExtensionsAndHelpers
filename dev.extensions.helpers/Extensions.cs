@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -347,16 +346,6 @@ namespace connectjs.dev.extensions
         public static string ToConditionalString(this bool value, string valueIfTrue, string valueIfFalse)
         {
             return value ? valueIfTrue : valueIfFalse;
-        }
-
-        public static string GetAppKeyValue(string appKey, string _default = null)
-        {
-            return ConfigurationManager.AppSettings[appKey] ?? _default;
-        }
-
-        public static string GetConnectionString(string name)
-        {
-            return ConfigurationManager.ConnectionStrings[name]?.ConnectionString;
         }
 
         public static string GetCurrentMethodFullName<T>(this MethodBase method)
