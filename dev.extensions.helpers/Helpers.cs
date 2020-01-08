@@ -1,4 +1,4 @@
-using connectjs.dev.extensions;
+using ConnectJS.dev.extensions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -8,7 +8,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 
-namespace connectjs.dev.helpers
+namespace ConnectJS.dev.helpers
 {
     public enum PhoneCountry
     {

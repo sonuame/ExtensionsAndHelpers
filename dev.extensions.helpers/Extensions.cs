@@ -1,6 +1,6 @@
 
 using AutoMapper;
-using connectjs.dev.helpers;
+using ConnectJS.dev.helpers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -8,15 +8,17 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Web;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace connectjs.dev.extensions
+namespace ConnectJS.dev.extensions
 {
     public static class Extensions
     {
@@ -40,23 +42,6 @@ namespace connectjs.dev.extensions
         public static string Join(this string[] data, string separater)
         {
             return string.Join(separater, data);
-        }
-
-        public static T ParseObject<T>(this JObject value)
-        {
-            return value.ToObject<T>(new JsonSerializer { DateParseHandling = DateParseHandling.None });
-        }
-
-        public static byte[] GetBytes(this object obj)
-        {
-            if (obj == null)
-                return null;
-            BinaryFormatter bf = new BinaryFormatter();
-            using (MemoryStream ms = new MemoryStream())
-            {
-                bf.Serialize(ms, obj);
-                return ms.ToArray();
-            }
         }
 
         public static byte[] GetBytes(this string data)
@@ -375,6 +360,12 @@ namespace connectjs.dev.extensions
             var fileName = Path.GetFileName(assemblyLocation);
             return assemblyLocation.Replace(fileName, string.Empty);
         }
+
+        public static T ToType<T>(this HttpResponseMessage @this)
+        {
+            var stringContent = Task.Run(async () => await @this.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<T>(stringContent.Result);
+        }
         #endregion
 
         #region Object Extensions
@@ -395,9 +386,23 @@ namespace connectjs.dev.extensions
             return null;
         }
 
-        /// <summary>
-        /// Gets member value using the reflection
-        /// </summary>
+        public static T ParseObject<T>(this JObject value)
+        {
+            return value.ToObject<T>(new JsonSerializer { DateParseHandling = DateParseHandling.None });
+        }
+
+        public static byte[] GetBytes(this object obj)
+        {
+            if (obj == null)
+                return null;
+            BinaryFormatter bf = new BinaryFormatter();
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bf.Serialize(ms, obj);
+                return ms.ToArray();
+            }
+        }
+
         public static object GetMemberValue<T>(this T obj, string memberName)
         {
             var member = typeof(T).GetMember(memberName)
@@ -409,7 +414,7 @@ namespace connectjs.dev.extensions
             return member.GetMemberValue(obj);
         }
 
-        private static object GetMemberValue<T>(this MemberInfo memberInfo, T obj)
+        public static object GetMemberValue<T>(this MemberInfo memberInfo, T obj)
         {
             object value;
             if (memberInfo is FieldInfo)
@@ -419,9 +424,6 @@ namespace connectjs.dev.extensions
             return value;
         }
 
-        /// <summary>
-        /// Returns a string representing the current object without the worry of checking the object against null.
-        /// </summary>
         public static string ToNullSafeString(this object obj)
         {
             var result = string.Empty;

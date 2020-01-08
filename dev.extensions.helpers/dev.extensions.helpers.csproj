@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.1</TargetFramework>
-        <AssemblyName>connectjs.dev.extensions</AssemblyName>
-        <RootNamespace>connectjs.dev.extensions</RootNamespace>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <AssemblyName>ConnectJS.dev.extensions</AssemblyName>
+        <RootNamespace>ConnectJS.dev.extensions</RootNamespace>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageId>ConnectJS.Extensions</PackageId>
         <Title>Extensions and Helpers</Title>
@@ -20,6 +20,11 @@
 
     <ItemGroup>
       <PackageReference Include="AutoMapper" Version="9.0.0" />
+      <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
       <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     </ItemGroup>
+
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+      <Exec Command="nuget pack $(ProjectDir)connectjs.extensions.nuspec" />
+    </Target>
 </Project>
