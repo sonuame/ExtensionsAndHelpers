@@ -1,5 +1,6 @@
 
 using AutoMapper;
+using connectjs.dev.helpers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -197,6 +198,16 @@ namespace connectjs.dev.extensions
         {
             if (double.TryParse(value, out var output)) return output;
             throw new Exception("String invalid for conversion");
+        }
+
+        public static string Encrypt(this string @this, string passphrase)
+        {
+            return Encryption.EncryptString(@this, passphrase);
+        }
+
+        public static string Decrypt(this string @this, string passphrase)
+        {
+            return Encryption.DecryptString(@this, passphrase);
         }
         #endregion
 

@@ -1,13 +1,14 @@
+using connectjs.dev.extensions;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
-namespace connectjs.dev.extensions.helpers
+namespace connectjs.dev.helpers
 {
     public enum PhoneCountry
     {
@@ -15,7 +16,7 @@ namespace connectjs.dev.extensions.helpers
         US,
         Canada
     }
-    
+
     public class Utils
     {
         public static void LogMessage(object message, string ident = null, string ext = "txt")
@@ -131,7 +132,7 @@ namespace connectjs.dev.extensions.helpers
 
     public class Encryption
     {
-        public string EncryptString(string Input, string passphrase)
+        public static string EncryptString(string Input, string passphrase)
         {
             Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(passphrase, new byte[] {
                 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76
@@ -151,9 +152,7 @@ namespace connectjs.dev.extensions.helpers
             }
             return string.Empty;
         }
-
-
-        public string DecryptString(string Input, string passphrase)
+        public static string DecryptString(string Input, string passphrase)
         {
             Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(passphrase, new byte[] {
                 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76
@@ -173,8 +172,7 @@ namespace connectjs.dev.extensions.helpers
             }
             return string.Empty;
         }
-
-        byte[] Encrypt(string plainText, byte[] Key, byte[] IV)
+        private static byte[] Encrypt(string plainText, byte[] Key, byte[] IV)
         {
             byte[] encrypted;
 
@@ -193,7 +191,7 @@ namespace connectjs.dev.extensions.helpers
             }
             return encrypted;
         }
-        string Decrypt(byte[] cipherText, byte[] Key, byte[] IV)
+        private static string Decrypt(byte[] cipherText, byte[] Key, byte[] IV)
         {
             string plaintext = null;
             using (var aes = new AesManaged())
