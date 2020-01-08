@@ -1,0 +1,77 @@
+<html>
+<body>
+<h1 class="code-line" data-line-start=0 data-line-end=1 ><a id="Extension_and_Helpers_0"></a>Extension and Helpers</h1>
+<p class="has-line-data" data-line-start="1" data-line-end="2">This library provides various extension functions and helpers for day to day development activities</p>
+<h2 class="code-line" data-line-start=3 data-line-end=4 ><a id="String__Extensions_3"></a>String - Extensions</h2>
+<h1 class="code-line" data-line-start=4 data-line-end=5 ><a id="_4"></a></h1>
+<h4 class="code-line" data-line-start=5 data-line-end=6 ><a id="stringIsNullOrEmpty_5"></a>(string).IsNullOrEmpty()</h4>
+<pre><code>Check for null or empty
+</code></pre>
+<h4 class="code-line" data-line-start=7 data-line-end=8 ><a id="stringIsNotNullAndWhiteSpaceint_minLength__1_7"></a>(string).IsNotNullAndWhiteSpace(int minLength = 1)</h4>
+<pre><code>Check for null or empty
+minLength parameter is used to validate the minimum number of chars in the string.
+</code></pre>
+<h4 class="code-line" data-line-start=10 data-line-end=11 ><a id="stringIsNotNullminLength__1_10"></a>(string).IsNotNull(minLength = 1)</h4>
+<pre><code>Check for null or empty
+</code></pre>
+<h4 class="code-line" data-line-start=12 data-line-end=13 ><a id="stringJoinstring_separator_12"></a>(string[]).Join(string separator)</h4>
+<pre><code>Joins a string array with a separator
+</code></pre>
+<h4 class="code-line" data-line-start=14 data-line-end=15 ><a id="stringGetBytes_14"></a>(string).GetBytes()</h4>
+<pre><code>Get Byte Array of a string
+</code></pre>
+<h4 class="code-line" data-line-start=16 data-line-end=17 ><a id="stringGetBytesFromBase64_16"></a>(string).GetBytesFromBase64()</h4>
+<pre><code>Get Byte Array of Base64 of a string
+</code></pre>
+<h4 class="code-line" data-line-start=18 data-line-end=19 ><a id="stringGetBase64_18"></a>(string).GetBase64()</h4>
+<pre><code>Get Base64 of a string
+</code></pre>
+<h4 class="code-line" data-line-start=20 data-line-end=21 ><a id="stringToDateTimeformat_20"></a>(string).ToDateTime(format)</h4>
+<pre><code>Convert a string to a datetime with a specified format. Default will be (&quot;MM/dd/yyyy&quot;)
+</code></pre>
+<h4 class="code-line" data-line-start=22 data-line-end=23 ><a id="stringToEpochformat_22"></a>(string).ToEpoch(format)</h4>
+<pre><code>Get Epoch seconds from a string represented date
+</code></pre>
+<h4 class="code-line" data-line-start=24 data-line-end=25 ><a id="stringCompress_24"></a>(string).Compress()</h4>
+<pre><code>Compress a string
+</code></pre>
+<h4 class="code-line" data-line-start=26 data-line-end=27 ><a id="stringDecompress_26"></a>(string).Decompress()</h4>
+<pre><code>Decompress a string
+</code></pre>
+<h4 class="code-line" data-line-start=28 data-line-end=29 ><a id="stringToObjectT_28"></a>(string).ToObject&lt;T&gt;()</h4>
+<pre><code>Deserialize a string to a specified Type by &quot;T&quot;
+</code></pre>
+<h4 class="code-line" data-line-start=30 data-line-end=31 ><a id="stringAddVariableValuevariable_value_30"></a>(string).AddVariableValue(variable, value)</h4>
+<pre><code>Substitute values of &quot;{  }&quot; with value specified, for e.g {URL} will be replaced to &quot;google.com&quot;
+</code></pre>
+<h4 class="code-line" data-line-start=32 data-line-end=33 ><a id="stringClipSegmentsstart_end_32"></a>(string).ClipSegments(start, end)</h4>
+<pre><code>Remove the part of string which starts with &quot;start&quot; and ends with &quot;end&quot;. for e.g remove Script tag from a serialized html string
+</code></pre>
+<h4 class="code-line" data-line-start=34 data-line-end=35 ><a id="stringToStream_34"></a>(string).ToStream()</h4>
+<pre><code>Convert a string to a memory stream
+</code></pre>
+<h4 class="code-line" data-line-start=36 data-line-end=37 ><a id="stringDeserializeT_36"></a>(string).Deserialize&lt;T&gt;()</h4>
+<pre><code>Deserialize a string to a specified Type by &quot;T&quot;
+same as that of ToObject&lt;T&gt;
+</code></pre>
+<h4 class="code-line" data-line-start=39 data-line-end=40 ><a id="stringDeserializeXmlT_39"></a>(string).DeserializeXml&lt;T&gt;()</h4>
+<pre><code>Deserialze a XML string to a Typed object
+</code></pre>
+<h4 class="code-line" data-line-start=41 data-line-end=42 ><a id="stringDeserializeUrlEncodedT_41"></a>(string).DeserializeUrlEncoded&lt;T&gt;()</h4>
+<pre><code>Convert a encoded Url with query strings value to a Typed Object
+?a=1&amp;b=3&amp;c=4  =&gt; class obj { int a = 1, int b = 3, int c = 4 }
+</code></pre>
+<h4 class="code-line" data-line-start=44 data-line-end=45 ><a id="stringToInt_44"></a>(string).ToInt()</h4>
+<pre><code>Convert string to Int
+</code></pre>
+<h4 class="code-line" data-line-start=46 data-line-end=47 ><a id="stringToDouble_46"></a>(string).ToDouble()</h4>
+<pre><code>Convert string to Double
+</code></pre>
+<h4 class="code-line" data-line-start=48 data-line-end=49 ><a id="stringEncryptpassphrase_48"></a>(string).Encrypt(passphrase)</h4>
+<pre><code>Encrypt a string with given passphrase
+</code></pre>
+<h4 class="code-line" data-line-start=50 data-line-end=51 ><a id="stringDecryptpassphrase_50"></a>(string).Decrypt(passphrase)</h4>
+<pre><code>Decrypt a string with given passphrase
+</code></pre>
+</body>
+</html>
