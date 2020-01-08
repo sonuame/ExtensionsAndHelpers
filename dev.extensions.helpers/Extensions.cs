@@ -141,11 +141,6 @@ namespace ConnectJS.dev.extensions
             return res;
         }
 
-        public static string Serialize(this object input)
-        {
-            return JsonConvert.SerializeObject(input);
-        }
-
         public static Stream ToStream(this string @this)
         {
             var stream = new MemoryStream();
@@ -369,6 +364,11 @@ namespace ConnectJS.dev.extensions
         #endregion
 
         #region Object Extensions
+
+        public static string Serialize(this object input)
+        {
+            return JsonConvert.SerializeObject(input);
+        }
 
         public static object GetPropertyValue<T>(this T input, string property)
         {
