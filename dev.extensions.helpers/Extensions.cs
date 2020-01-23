@@ -361,6 +361,16 @@ namespace ConnectJS.dev.extensions
             var stringContent = Task.Run(async () => await @this.Content.ReadAsStringAsync());
             return JsonConvert.DeserializeObject<T>(stringContent.Result);
         }
+
+        public static double ToDouble(this int @this)
+        {
+            return (double)@this;
+        }
+
+        public static int ToInt(this double @this)
+        {
+            return (int)@this;
+        }
         #endregion
 
         #region Object Extensions
@@ -438,5 +448,6 @@ namespace ConnectJS.dev.extensions
             return fields.Select(f => f.GetValue(obj).ToString()).ToList();
         }
         #endregion
+
     }
 }
